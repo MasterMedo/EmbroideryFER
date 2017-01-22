@@ -145,8 +145,8 @@ namespace WebApp.Controllers
 
        
         // POST: ShoppingCart/Delete/5
-        [Microsoft.AspNetCore.Mvc.HttpPost]
-        [Microsoft.AspNetCore.Mvc.ValidateAntiForgeryToken]
+        //[Microsoft.AspNetCore.Mvc.HttpPost]
+        //[Microsoft.AspNetCore.Mvc.ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Guid id)
         {
             var user = await GetCurrentUser();
@@ -156,7 +156,7 @@ namespace WebApp.Controllers
                 return new BadRequestResult();
             }
 
-            if (!_webAppSqlRepository.RemoveFromCart(me, id, 1, true))
+            if (_webAppSqlRepository.RemoveFromCart(me, id, 1, true))
             {
                 return new BadRequestResult();
             }

@@ -24,7 +24,7 @@ namespace WebApp.Data
 
         public IDbSet<Order> Orders { get; set; }
 
-        public IDbSet<CartProduct> OnlyCartProducts { get; set; }
+        public IDbSet<CartProduct> CartProducts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -324,8 +324,7 @@ namespace WebApp.Logic
             if (all || prod.Quantity <= quantity)
             {
                 cart.CartedProducts.Remove(prod);
-                    _context.SaveChanges();
-                return true;
+                _context.SaveChanges();
             }
             prod.Quantity -= quantity;
             //    _context.SaveChanges();
@@ -340,7 +339,11 @@ namespace WebApp.Logic
             {
                 return;
             }
-
+            var products = _context.CartProducts.Where(c => c.ShoppingCartId == cart.CartId);
+            if (products != null) foreach (CartProduct product in products)
+            {
+                    _context.CartProducts.Remove(product);
+            }
             cart.CartedProducts = new List<CartProduct>();
             cart.CartedProducts.Clear();
             UpdateCart(cart);
@@ -354,7 +357,7 @@ namespace WebApp.Logic
                 return new List<CartProduct>();
             }
             return
-                _context.OnlyCartProducts.Include(path: s => s.Product)
+                _context.CartProducts.Include(path: s => s.Product)
                     .Where(s => s.ShoppingCartId == cart.CartId)
                     .ToList();
 
